@@ -4,7 +4,7 @@ data "aws_vpc" "default" {
 
 
 resource "aws_security_group" "allow_all" {
-  name        = "allow_all"
+  name        = "allow_all_terraform"
   description = "Allow all inbound and outbound traffic"
   vpc_id      = data.aws_vpc.default.id
 
@@ -30,7 +30,7 @@ resource "aws_security_group" "allow_all" {
     }
 
     tags = {
-        Name = "allow_all"
+        Name = "allow_all_terraform"
     }
 }       
 
