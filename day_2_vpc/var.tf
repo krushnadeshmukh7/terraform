@@ -27,7 +27,7 @@ variable "instance_type" {
 }
 
 variable "key_name" {
-    default = "krushna"
+    default = "abhi"
 }
 
 variable "volume_size" {
