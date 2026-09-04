@@ -77,7 +77,7 @@ resource "aws_lb_listener" "listener" {
 # CREATE LAUNCH TEMPLATE
 resource "aws_launch_template" "lt" {
   name_prefix   = "web_template"
-  image_id      = "ami-0c55b159cbfafe1f0"
+  image_id      = "ami-090d68841c2a28756"
   key_name      = "krushna"
   instance_type = "t3.micro"
 
