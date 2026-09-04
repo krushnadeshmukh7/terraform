@@ -1,4 +1,3 @@
-provider "aws" {
-  region = "us-west-2"
-  profile = "dev"
+variable "public_az" {
+  default = "ap-south-1"
 }
