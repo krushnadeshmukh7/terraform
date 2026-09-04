@@ -12,7 +12,7 @@ data "aws_subnets" "default" {
 # CREATE SECURITY GROUP
 resource "aws_security_group" "sg" {
   name        = "my_sg"
-  description = "My_sg"
+  description = "my_sg"
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
