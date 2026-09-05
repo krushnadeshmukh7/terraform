@@ -1,9 +1,13 @@
 #!/bin/bash
+
 dnf update -y
 dnf install -y httpd
+
 systemctl start httpd
 systemctl enable httpd
-rm -rf /usr/share/httpd/html/index.html
-echo <h1> hello from $HOSTNAME </h1> > /usr/share/httpd/html/index.html
+
+cat <<EOF > /usr/share/httpd/html/index.html
+<h1>Hello from $HOSTNAME</h1>
+EOF
 
 systemctl restart httpd

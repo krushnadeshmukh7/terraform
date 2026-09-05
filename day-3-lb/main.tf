@@ -11,8 +11,8 @@ data "aws_subnets" "default" {
 
 # CREATE SECURITY GROUP
 resource "aws_security_group" "sg" {
-  name        = "my_sg"
-  description = "my_sg"
+  name        = "day3-lb-sg-2"
+  description = "Security group for Day 3 ALB"
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
@@ -37,29 +37,39 @@ resource "aws_security_group" "sg" {
   }
 
   tags = {
-    Name = "my_sg"
+    Name = "day3-lb-sg-2"
   }
 }
 
 # CREATE LOAD BALANCER
 resource "aws_lb" "lb" {
-  name               = "ALB"
+  name               = "day3-alb-2"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.sg.id]
   subnets            = data.aws_subnets.default.ids
 
   tags = {
-    Name = "ALB"
+    Name = "day3-alb-2"
   }
 }
 
 # CREATE TARGET GROUP
 resource "aws_lb_target_group" "target_group" {
-  name     = "my-target-group"
+  name     = "day3-tg-2"
   port     = 80
   protocol = "HTTP"
   vpc_id   = data.aws_vpc.default.id
+
+  health_check {
+    path                = "/"
+    protocol            = "HTTP"
+    port                = "80"
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    interval            = 30
+  }
 }
 
 # CREATE LOAD BALANCER LISTENER
@@ -76,7 +86,7 @@ resource "aws_lb_listener" "listener" {
 
 # CREATE LAUNCH TEMPLATE
 resource "aws_launch_template" "lt" {
-  name_prefix   = "web_template"
+  name_prefix   = "day3-web-"
   image_id      = "ami-090d68841c2a28756"
   key_name      = "krushna"
   instance_type = "t3.micro"
@@ -86,17 +96,19 @@ resource "aws_launch_template" "lt" {
   user_data = filebase64("/root/terraform/day-3-lb/user_data.sh")
 }
 
+# CREATE AUTO SCALING GROUP
 resource "aws_autoscaling_group" "ASG" {
-    name = "Ags"
-    max_size = 5
-    min_size = 2
-    desired_capacity = 2
-    target_group_arns = [aws_lb_target_group.target_group.arn]
-    vpc_zone_identifier = data.aws_subnets.default.ids
+  name                = "day3-asg-2"
+  max_size            = 5
+  min_size            = 2
+  desired_capacity    = 2
+  target_group_arns   = [aws_lb_target_group.target_group.arn]
+  vpc_zone_identifier = data.aws_subnets.default.ids
 
-    launch_template {
-        id = aws_launch_template.lt.id
-        version = "$Latest"  
-    }
-    health_check_type = "ELB"
+  launch_template {
+    id      = aws_launch_template.lt.id
+    version = "$Latest"
+  }
+
+  health_check_type = "ELB"
 }
