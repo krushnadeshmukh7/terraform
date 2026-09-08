@@ -38,9 +38,9 @@ resource "aws_eip" "nat_eip" {
     }
 }
 
-resource "aws_nat_gateawat" "nat" {
+resource "aws_nat_gateaway" "nat" {
     subnet_id =aws_subnet.public_subnet.id 
-    allcation_id = aws_eip.nat_eip.id
+    allocation_id = aws_eip.nat_eip.id
     tags = {
         Name = "nat"
     }
@@ -58,7 +58,7 @@ resource "aws_route_table" "pubic_rt" {
     }
 }
 
-resource "aws_route_table_assocition" "public_rt_assoc" {
+resource "aws_route_table_association" "public_rt_assoc" {
     subnet_id =aws_subnet.public_subnet.id
     route_table_id = aws_route_table.public_rt.id
 
@@ -110,4 +110,4 @@ resource "aws_security_group" "sg" {
     tags = {
         Name = "my_sg"
     }
-    
+}

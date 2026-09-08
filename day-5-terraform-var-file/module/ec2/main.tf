@@ -11,7 +11,7 @@ resource "aws_instance" "public_instance" {
         }
 }
 
-resource "aws_instance " "private_instance" {
+resource "aws_instance" "private_instance" {
     ami = var.ami
     instance_type = var.instance_type
     key_name = var.key_name

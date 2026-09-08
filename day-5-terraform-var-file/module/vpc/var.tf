@@ -5,4 +5,4 @@ variable "public_az" {}
 variable "private_az" {}
 variable "sg_name" {}
 variable "http_port" {}
-vairable "ssh_port" {}
+variable "ssh_port" {}
