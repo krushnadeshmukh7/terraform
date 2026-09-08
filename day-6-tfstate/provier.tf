@@ -10,7 +10,7 @@ terraform {
     region = "ap-east-1"
     profile = "dev"
     use_lockfile = true
-    key = krushna
-    shared_credentials_files = [ "./root/.aws/credentials" ]
+    key = "terraform.tfstate"
+    shared_credentials_file = ["/root/.aws/credentials"]
   }
 }
