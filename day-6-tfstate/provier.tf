@@ -11,6 +11,6 @@ terraform {
     profile = "dev"
     use_lockfile = true
     key = "terraform.tfstate"
-    shared_credentials_file = ["/root/.aws/credentials"]
+    shared_credentials_files = ["/root/.aws/credentials"]
   }
 }
